@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
-    }
 
     public function register(Request $request)
     {
@@ -59,5 +55,23 @@ class AuthController extends Controller
             'expires_in' => auth()->factory()->getTTL() * 60,
             'user' => auth()->user()
         ]);
+    }
+
+    public function refresh()
+    {
+        return $this->createNewToken(auth()->refresh());
+    }
+
+    public function profile()
+    {
+        return response()->json(auth()->user());
+    }
+
+    public function logout()
+    {
+        auth()->logout();
+        return response()->json([
+            'message' => 'User successfully signed out'
+        ], 201);
     }
 }
