@@ -46,6 +46,12 @@ return [
             'provider'  => 'users',
             'hash'      => false
         ],
+        // create jwt token for karyawan
+        'karyawan-api' => [
+            'driver'    => 'jwt',
+            'provider'  => 'karyawans',
+            'hash'      => false
+        ],
     ],
 
     /*
@@ -69,6 +75,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+        // multiple authentication for karyawan
+        'karyawans' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Karyawan::class,
         ],
 
         // 'users' => [
